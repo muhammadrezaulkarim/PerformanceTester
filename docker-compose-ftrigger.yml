@@ -42,7 +42,7 @@ services:
           cpus: '2.0'
         reservations:
           memory: 300M
-          cpus: '0.75'
+          cpus: '2.0'
       placement:
         constraints:
           - 'node.role == manager'
