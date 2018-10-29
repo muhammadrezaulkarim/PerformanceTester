@@ -8,6 +8,13 @@ services:
     environment:
       dnsrr: 'true'
     deploy:
+      resources:
+        limits:
+          memory: 500M
+          cpus: '0.75'
+        reservations:
+          memory: 300M
+          cpus: '0.5'
       placement:
         constraints:
           - 'node.role == manager'
@@ -38,11 +45,11 @@ services:
       replicas: 1
       resources:
         limits:
-          memory: 300M
-          cpus: '0.5'
+          memory: 500M
+          cpus: '1.25'
         reservations:
           memory: 300M
-          cpus: '0.35'
+          cpus: '0.75'
       placement:
         constraints:
           - 'node.role == manager'
@@ -282,6 +289,14 @@ services:
     networks:
       - streaming
     deploy:
+       resources:
+        limits:
+          memory: 2G
+          cpus: '1.00'
+        reservations:
+          memory: 300M
+          cpus: '0.5'
+      
        placement:
          constraints:
            - 'node.role == worker'
@@ -304,6 +319,13 @@ services:
     networks:
       - streaming
     deploy:
+       resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 300M
+          cpus: '0.5'
       
        placement:
          constraints:
@@ -348,21 +370,7 @@ services:
            - 'node.role == worker'
            - 'node.platform.os == linux'
 
-  kafka-topics-ui:
-    image: landoop/kafka-topics-ui:0.9.2
-    environment:
-      - KAFKA_REST_PROXY_URL=http://kafka-rest:8082
-      - PROXY=true
-    ports:
-      - 8000:8000
-    networks:
-      - streaming
-    deploy:
-       placement:
-         constraints:
-           - 'node.role == worker'
-           - 'node.platform.os == linux'
-    
+   
   bottledwater:
     image: mrkcse/bottledwater-pg:latest
     environment:
